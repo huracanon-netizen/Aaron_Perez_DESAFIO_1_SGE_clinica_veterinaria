@@ -1,0 +1,79 @@
+<odoo>
+<!--Con record creas un registro en ODOO-->
+  <record id="view_consulta_form" model="ir.ui.view"> <!--indica que lo que creas es una vista de Odoo.-->
+    <field name="name">clinica_vet.consulta.form</field>
+    <field name="model">clinica_vet.consulta</field>
+    <field name="arch" type="xml"><!--aquí dentro va el XML de la vista.-->
+      <form string="Ficha de la consulta">
+        <!--El header es la barra de arriba del formulario. Cada button llama al metodo
+        de Python que pone en name-->
+        <header>
+          <button type="object" name="action_realizada" string="Marcar realizada" class="btn-primary"/>
+          <button type="object" name="action_cancelar" string="Cancelar consulta"/>
+        </header>
+        <sheet> <!--El sheet es para que los campos se vean en una hoja-->
+          <group> <!--El group es para agrupar los campos en la vista-->
+            <field name="name"/> <!-- El field es cada columna-->
+            <field name="mascota_id"/>
+          </group>
+          <group>
+            <field name="fecha_hora"/>
+            <field name="estado"/>
+            <field name="urgente"/>
+          </group>
+          <group>
+            <field name="precio"/>
+            <field name="precio_total"/>
+            <field name="diagnostico"/>
+          </group>
+          <field name="tratamiento_ids"/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_consulta_list" model="ir.ui.view">
+    <field name="name">clinica_vet.consulta.list</field>
+    <field name="model">clinica_vet.consulta</field>
+    <field name="arch" type="xml">
+      <list string="Lista de consultas">
+        <field name="name"/>
+        <field name="mascota_id"/>
+        <field name="fecha_hora"/>
+        <field name="estado"/>
+        <field name="urgente"/>
+        <field name="precio_total"/>
+      </list>
+    </field>
+  </record>
+
+  <!--La vista search es la barra de busqueda de arriba. Los field son por lo que se puede buscar,
+  los filter con domain son los filtros y los filter con group_by son las agrupaciones-->
+  <record id="view_consulta_search" model="ir.ui.view">
+    <field name="name">clinica_vet.consulta.search</field>
+    <field name="model">clinica_vet.consulta</field>
+    <field name="arch" type="xml">
+      <search string="Buscar">
+        <field name="name"/>
+        <field name="mascota_id"/>
+        <filter string="Pendientes" name="pendientes" domain="[('estado','=','pendiente')]"/>
+        <filter string="Urgentes" name="urgentes" domain="[('urgente','=',True)]"/>
+        <filter string="Por estado" name="grupo_estado" context="{'group_by':'estado'}"/>
+        <filter string="Por mascota" name="grupo_mascota" context="{'group_by':'mascota_id'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_consulta" model="ir.actions.act_window">
+    <field name="name">Consultas</field>
+    <field name="res_model">clinica_vet.consulta</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_id" ref="view_consulta_list"/>
+  </record>
+<!-- El menuitem sirve para crear un menú en Odoo -->
+  <menuitem id="menu_consultas" 
+            parent="menu_clinica_root"
+            name="Consultas"
+            action="action_consulta"/>
+
+</odoo>

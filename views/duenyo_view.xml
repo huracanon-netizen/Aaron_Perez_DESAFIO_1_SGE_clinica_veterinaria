@@ -1,14 +1,14 @@
 <odoo>
-
-  <record id="view_duenyo_form" model="ir.ui.view">
+<!--Con record creas un registro en ODOO-->
+  <record id="view_duenyo_form" model="ir.ui.view"> <!--indica que lo que creas es una vista de Odoo.-->
     <field name="name">clinica_vet.duenyo.form</field>
     <field name="model">clinica_vet.duenyo</field>
-    <field name="arch" type="xml">
+    <field name="arch" type="xml"><!--aquí dentro va el XML de la vista.-->
       <form string="Ficha del dueño">
-        <sheet>
-          <group>
+        <sheet><!--El sheet es para que los campos se vean en una hoja-->
+          <group><!--El group es para agrupar los campos en la vista-->
             <field name="nombre"/>
-            <field name="apellidos"/>
+            <field name="apellidos"/><!-- El field es cada columna-->
           </group>
           <group>
             <field name="telefono"/>
@@ -20,6 +20,8 @@
             <field name="peso_total"/>
             <field name="notas"/>
           </group>
+          <!--Aqui salen las mascotas del dueño, que es el campo One2many-->
+          <field name="mascota_ids"/>
         </sheet>
       </form>
     </field>
@@ -39,6 +41,22 @@
     </field>
   </record>
 
+  <!--La vista search es la barra de busqueda de arriba. Los field son por lo que se puede buscar,
+  los filter con domain son los filtros y los filter con group_by son las agrupaciones-->
+  <record id="view_duenyo_search" model="ir.ui.view">
+    <field name="name">clinica_vet.duenyo.search</field>
+    <field name="model">clinica_vet.duenyo</field>
+    <field name="arch" type="xml">
+      <search string="Buscar">
+        <field name="nombre"/>
+        <field name="apellidos"/>
+        <field name="telefono"/>
+        <filter string="Clientes habituales" name="habituales" domain="[('es_cliente_habitual','=',True)]"/>
+        <filter string="Por fecha de alta" name="grupo_fecha_alta" context="{'group_by':'fecha_alta'}"/>
+      </search>
+    </field>
+  </record>
+
   <record id="action_duenyo" model="ir.actions.act_window">
     <field name="name">Dueños</field>
     <field name="res_model">clinica_vet.duenyo</field>
@@ -46,7 +64,8 @@
     <field name="view_id" ref="view_duenyo_list"/>
   </record>
 
-  <menuitem id="menu_clinica_root" name="Orivetia"/>
+<!--El menuitem es para crear un menú en Odoo-->
+  <menuitem id="menu_clinica_root" name="Orivetia"/> 
   <menuitem id="menu_duenyos"
             parent="menu_clinica_root"
             name="Dueños"

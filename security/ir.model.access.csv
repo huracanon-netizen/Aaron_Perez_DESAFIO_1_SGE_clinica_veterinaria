@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_duenyo_user,access.duenyo.user,model_clinica_vet_duenyo,base.group_user,1,1,1,1
 access_mascota_user,access.mascota.user,model_clinica_vet_mascota,base.group_user,1,1,1,1
+access_consulta_user,access.consulta.user,model_clinica_vet_consulta,base.group_user,1,1,1,1
+access_tratamiento_user,access.tratamiento.user,model_clinica_vet_tratamiento,base.group_user,1,1,1,1

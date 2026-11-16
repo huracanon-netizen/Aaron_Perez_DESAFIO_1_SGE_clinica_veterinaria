@@ -4,6 +4,8 @@ from odoo import models, fields, api
 class Duenyo(models.Model):
     _name = 'clinica_vet.duenyo'
     _description = 'Dueño de mascota'
+    #El _rec_name es el campo que se enseña cuando se elige un dueño desde otro modelo
+    _rec_name = 'nombre'
 
     nombre = fields.Char(string='Nombre', required=True)
     apellidos = fields.Char(string='Apellidos', required=True)
@@ -12,9 +14,11 @@ class Duenyo(models.Model):
     fecha_alta = fields.Date(string='Fecha de alta')
     es_cliente_habitual = fields.Boolean(string='Cliente habitual', default=False)
     notas = fields.Text(string='Notas')
+    # One2Many es una relación donde un registro tiene múltiples registros relacionados
     mascota_ids = fields.One2many('clinica_vet.mascota', 'duenyo_id', string='Mascotas')
     peso_total = fields.Float(string='Peso total de sus mascotas', compute='_calcular_peso_total')
-
+    
+    #Lo que hace es que como que recalcula un campo calculado cuando cambias los campos
     @api.depends('mascota_ids.peso')
     def _calcular_peso_total(self):
         for record in self:

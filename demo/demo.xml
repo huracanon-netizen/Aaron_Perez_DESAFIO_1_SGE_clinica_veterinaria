@@ -1,0 +1,138 @@
+<odoo>
+  <data>
+    <!--Datos de prueba para no tener que rellenar todo a mano al instalar el modulo.
+    Cada record crea un registro del modelo que pone en model, y el id sirve para
+    poder referenciarlo despues desde otro registro con ref-->
+
+    <!-- Dueños -->
+    <record id="duenyo_laura" model="clinica_vet.duenyo">
+      <field name="nombre">Laura</field>
+      <field name="apellidos">Gómez Ortiz</field>
+      <field name="telefono">600111222</field>
+      <field name="email">laura.gomez@example.com</field>
+      <field name="fecha_alta">2025-03-10</field>
+      <field name="es_cliente_habitual">True</field>
+      <field name="notas">Suele venir por las tardes.</field>
+    </record>
+
+    <record id="duenyo_miguel" model="clinica_vet.duenyo">
+      <field name="nombre">Miguel</field>
+      <field name="apellidos">Sanz Vera</field>
+      <field name="telefono">600333444</field>
+      <field name="email">miguel.sanz@example.com</field>
+      <field name="fecha_alta">2026-01-20</field>
+    </record>
+
+    <record id="duenyo_carmen" model="clinica_vet.duenyo">
+      <field name="nombre">Carmen</field>
+      <field name="apellidos">Ruiz Molina</field>
+      <field name="telefono">600555666</field>
+      <field name="email">carmen.ruiz@example.com</field>
+      <field name="fecha_alta">2026-09-05</field>
+    </record>
+
+    <!-- Mascotas, con ref se le pone el dueño que se ha creado arriba -->
+    <record id="mascota_toby" model="clinica_vet.mascota">
+      <field name="nombre">Toby</field>
+      <field name="especie">perro</field>
+      <field name="raza">Labrador</field>
+      <field name="peso">28.5</field>
+      <field name="fecha_nacimiento">2020-05-14</field>
+      <field name="duenyo_id" ref="duenyo_laura"/>
+    </record>
+
+    <record id="mascota_luna" model="clinica_vet.mascota">
+      <field name="nombre">Luna</field>
+      <field name="especie">gato</field>
+      <field name="raza">Siamés</field>
+      <field name="peso">4.2</field>
+      <field name="fecha_nacimiento">2022-08-01</field>
+      <field name="duenyo_id" ref="duenyo_laura"/>
+    </record>
+
+    <record id="mascota_rocky" model="clinica_vet.mascota">
+      <field name="nombre">Rocky</field>
+      <field name="especie">perro</field>
+      <field name="raza">Bulldog francés</field>
+      <field name="peso">12.0</field>
+      <field name="fecha_nacimiento">2023-02-20</field>
+      <field name="duenyo_id" ref="duenyo_miguel"/>
+    </record>
+
+    <record id="mascota_coco" model="clinica_vet.mascota">
+      <field name="nombre">Coco</field>
+      <field name="especie">otro</field>
+      <field name="raza">Conejo enano</field>
+      <field name="peso">1.5</field>
+      <field name="fecha_nacimiento">2024-11-03</field>
+      <field name="duenyo_id" ref="duenyo_carmen"/>
+    </record>
+
+    <!-- Tratamientos -->
+    <record id="tratamiento_vacuna_rabia" model="clinica_vet.tratamiento">
+      <field name="name">Vacuna de la rabia</field>
+      <field name="descripcion">Vacuna anual obligatoria.</field>
+      <field name="precio">35.0</field>
+      <field name="duracion_minutos">15</field>
+      <field name="categoria">vacuna</field>
+    </record>
+
+    <record id="tratamiento_analisis_sangre" model="clinica_vet.tratamiento">
+      <field name="name">Análisis de sangre</field>
+      <field name="descripcion">Análisis completo.</field>
+      <field name="precio">50.0</field>
+      <field name="duracion_minutos">20</field>
+      <field name="categoria">analisis</field>
+    </record>
+
+    <record id="tratamiento_esterilizacion" model="clinica_vet.tratamiento">
+      <field name="name">Esterilización</field>
+      <field name="descripcion">Operación con anestesia general.</field>
+      <field name="precio">180.0</field>
+      <field name="duracion_minutos">90</field>
+      <field name="categoria">cirugia</field>
+    </record>
+
+    <record id="tratamiento_corte_unyas" model="clinica_vet.tratamiento">
+      <field name="name">Corte de uñas</field>
+      <field name="precio">10.0</field>
+      <field name="duracion_minutos">10</field>
+      <field name="categoria">otro</field>
+    </record>
+
+    <!-- Consultas, con ref se le pone la mascota -->
+    <record id="consulta_toby_revision" model="clinica_vet.consulta">
+      <field name="name">Revisión anual</field>
+      <field name="fecha_hora">2026-11-03 10:00:00</field>
+      <field name="estado">realizada</field>
+      <field name="precio">30.0</field>
+      <field name="diagnostico">Todo correcto.</field>
+      <field name="mascota_id" ref="mascota_toby"/>
+    </record>
+
+    <record id="consulta_luna_vomitos" model="clinica_vet.consulta">
+      <field name="name">Vómitos</field>
+      <field name="fecha_hora">2026-11-18 17:30:00</field>
+      <field name="estado">pendiente</field>
+      <field name="precio">40.0</field>
+      <field name="urgente">True</field>
+      <field name="mascota_id" ref="mascota_luna"/>
+    </record>
+
+    <record id="consulta_rocky_vacuna" model="clinica_vet.consulta">
+      <field name="name">Vacunación</field>
+      <field name="fecha_hora">2026-11-20 12:00:00</field>
+      <field name="estado">pendiente</field>
+      <field name="precio">25.0</field>
+      <field name="mascota_id" ref="mascota_rocky"/>
+    </record>
+
+    <record id="consulta_coco_revision" model="clinica_vet.consulta">
+      <field name="name">Primera revisión</field>
+      <field name="fecha_hora">2026-11-10 09:30:00</field>
+      <field name="estado">cancelada</field>
+      <field name="precio">30.0</field>
+      <field name="mascota_id" ref="mascota_coco"/>
+    </record>
+  </data>
+</odoo>
